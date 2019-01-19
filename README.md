@@ -1,21 +1,8 @@
-# Limulus
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-## Ruby on Rails
-
-This application requires:
-
-- Ruby 2.3.7
-- Rails 5.2.1
-
-Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
+![](https://static.thenounproject.com/png/7090-200.png)
 
 ## Limulus
 
-![](https://static.thenounproject.com/png/7090-200.png)
-
-## Intro
+[See demo](http://limulus.herokuapp.com)
 
 Horseshoe crabs (or limulus) have developed a super efficient immune system. Their blood is [harvested](https://www.frontiersin.org/articles/10.3389/fmars.2018.00185/full) because it contain a very sensitive compound useful to detect bacterial contamination and has anti-bacterial properties. They are called living fossils has it’s been around for 450M of years and saves millions of human lives every year. It’s blue blood [cost](https://www.businessinsider.com/why-horseshoe-crab-blood-expensive-2018-8?IR=T) 60 000 per gallon
 
@@ -79,15 +66,12 @@ Logo : [https://thenounproject.com/term/horseshoe-crab/640703/](https://thenounp
 ### Sound Design
 
 Jeff Mills Soundtrack musical reinterpretation commissioned to Jeff Mills by Cinémathéque Française and Cité de la Musique in 2009
-
 [http://www.citedelamusique.fr/francais/evenement.aspx?id=10835](http://www.citedelamusique.fr/francais/evenement.aspx?id=10835)
 
 Pink floyd airy stuff
-
 [https://www.youtube.com/watch?v=cWGE9Gi0bB0](https://www.youtube.com/watch?v=cWGE9Gi0bB0)
 
 Inside body sound effect :
-
 [https://www.youtube.com/watch?v=WqVw9xgULLU](https://www.youtube.com/watch?v=WqVw9xgULLU)
 
 ## Credits
