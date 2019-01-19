@@ -1,5 +1,6 @@
 Limulus
 ================
+rails g scaffold Score name:string mark:integer
 
 Rails Composer is supported by developers who purchase our RailsApps tutorials.
 Need help? Ask on Stack Overflow with the tag 'railsapps.'
