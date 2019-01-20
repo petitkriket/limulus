@@ -1,0 +1,24 @@
+<div class="ui-table-score-wrapper">
+<table id="hallmark" class="table table-sm small table-hover">
+  <thead>
+    <tr>
+		  <th>#</th>
+      <th>Name</th>
+      <th>Mark</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+		<% @count = 0 %>
+    <% @scores.each do |score| %>
+      <tr>
+      <th scope="row"><%= @count += 1 %></th>
+				<td><%= score.name %></td>
+        <td><%= score.mark %></td>
+        <td><%= score.date.strftime("%Y/%m/%d") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+	</table>
+	</div>

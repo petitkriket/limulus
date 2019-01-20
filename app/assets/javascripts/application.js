@@ -15,3 +15,13 @@
 //= require rails-ujs
 //= require bootstrap-sprockets
 //= require_tree .
+
+// load canvas after page is fully loaded
+window.onload = function () {
+	var canvas = document.getElementById("game-canvas");
+	var ctx = canvas.getContext("2d");
+
+	// take windows size into accoun
+	ctx.canvas.width = window.innerWidth;
+	ctx.canvas.height = window.innerHeight;
+};

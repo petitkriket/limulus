@@ -1,2 +1,13 @@
-<h3>Limulus Game</h3>
-<%= link_to "Players scores", scores_path %>
+<div class="ui-overlay">
+	<div class="container-fluid d-flex justify-content-end">
+		<div class="row"> 
+			<div class="col-md-12 text-light bg-dark p-4">
+				<h3 class="text-center">High Scores</h3>
+					<%= link_to "Edit results", scores_path, :class => 'btn btn-link btn-xs small text-danger' %>
+					<%= render 'scores/table' %>
+			</div>
+		</div>
+	</div>
+</div>
+<canvas id="game-canvas" width="1024px" height="768px"></canvas>
+
