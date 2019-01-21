@@ -14,11 +14,16 @@
 //= require popper
 //= require rails-ujs
 //= require bootstrap-sprockets
+//= require particles.min.js
 //= require_tree .
 
+/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+//particlesJS.load("game-canvas", "/particlesjs-config.json");
+//console.log(particlesJS);
 // load canvas after page is fully loaded
 window.onload = function () {
-	var canvas = document.getElementById("game-canvas");
+
+	var canvas = document.getElementById("game-layer");
 	var ctx = canvas.getContext("2d");
 
 	// take windows size into accoun

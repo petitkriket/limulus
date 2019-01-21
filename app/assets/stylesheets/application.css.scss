@@ -14,8 +14,12 @@
  *= require_self
  */
 #game-canvas {
-	z-index: 0;
+	z-index: -1;
 	background-color: #111;
+}
+
+canvas {
+	background-color: transparent;
 }
 
 .ui-overlay {
