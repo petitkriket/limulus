@@ -1,7 +1,6 @@
-![](https://static.thenounproject.com/png/7090-200.png)
-
 # Limulus
 
+![](https://static.thenounproject.com/png/7090-200.png)
 [See demo](http://limulusgame.herokuapp.com)
 Horseshoe crabs (or limulus) have developed a super efficient immune system. Their blood is [harvested](https://www.frontiersin.org/articles/10.3389/fmars.2018.00185/full) because it contain a very sensitive compound useful to detect bacterial contamination and has anti-bacterial properties. They are called living fossils has it’s been around for 450M of years and saves millions of human lives every year. It’s blue blood [cost](https://www.businessinsider.com/why-horseshoe-crab-blood-expensive-2018-8?IR=T) \$60k per gallon
 
@@ -9,8 +8,8 @@ Horseshoe crabs (or limulus) have developed a super efficient immune system. The
 
 ### Type speed shooting game
 
-Typespeed basic : [https://www.youtube.com/watch?v=ENF_q-rRrcU&t=45s](https://www.youtube.com/watch?v=ENF_q-rRrcU&t=45s)
-Typespeed shooting game : [https://www.youtube.com/watch?v=yPFrIADy0nU](https://www.youtube.com/watch?v=yPFrIADy0nU)
+Typespeed basic idea [here](https://www.youtube.com/watch?v=ENF_q-rRrcU&t=45s)
+Typespeed shooting game visally enhanced : [here](https://www.youtube.com/watch?v=yPFrIADy0nU)
 
 1. User type bacterias to make them disappear
 2. If user get touched by a bacteria name, gameover
@@ -45,7 +44,7 @@ As it's within an actual body, it's kind of low light environnement with flowing
 
 ## References
 
-**Fantastic Voyage** (1966) A classic sci-fi low budget movie based on Asimov novel. Also an hommage to **Jean Painlevé**, a scientist wanna be artists who made videos about sea creatures, concept of time and space and popular vulgarisation
+**Fantastic Voyage** (1966) A classic sci-fi low budget movie after an Isac Asimov novel. Also an hommage to **Jean Painlevé**, a scientist wanna be artists who made videos about sea creatures, concept of time and space and popular vulgarisation
 
 The mesmerizing, utterly unclassifiable science films of Jean Painlevé (1902-89) have to be seen to be believed: delightful, surrealist-influenced dream works that are also serious science. The French filmmaker-scientist-inventor had a decades-spanning career in which he created hundreds of short films on subjects ranging from astronomy to pigeons to, most famously, such marine-life marvels as the sea horse and the sea urchin. _(The Criterion)_
 
