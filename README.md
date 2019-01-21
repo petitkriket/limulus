@@ -1,7 +1,8 @@
 # Limulus
 
 ![](https://static.thenounproject.com/png/7090-200.png)
-[See demo](http://limulusgame.herokuapp.com)
+
+[Launch the game](http://limulusgame.herokuapp.com)
 Horseshoe crabs (or limulus) have developed a super efficient immune system. Their blood is [harvested](https://www.frontiersin.org/articles/10.3389/fmars.2018.00185/full) because it contain a very sensitive compound useful to detect bacterial contamination and has anti-bacterial properties. They are called living fossils has it’s been around for 450M of years and saves millions of human lives every year. It’s blue blood [cost](https://www.businessinsider.com/why-horseshoe-crab-blood-expensive-2018-8?IR=T) \$60k per gallon
 
 # Gameplay possibilities
@@ -64,6 +65,12 @@ The mesmerizing, utterly unclassifiable science films of Jean Painlevé (1902-89
 Jeff Mills musical theme of Fantastic Voyage commissioned by Cinémathèque Française and Cité de la Musique in 2009 [here](https://www.youtube.com/watch?v=oHkIrYEmjyo) to give a sense of rythm and fasten gameplay pace.
 
 Inside body sound effect, pulsating [here](https://www.youtube.com/watch?v=WqVw9xgULLU)
+
+## Protoyping
+
+TODO / Intro screen, Level, UI, Ending screen.
+Body/ocean vibe version of Z-Type below
+![](https://pasteboard.co/HXrLA0N.jpg)
 
 ## Credits
 
