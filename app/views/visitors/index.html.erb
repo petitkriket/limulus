@@ -1,14 +1,30 @@
 <div class="ui-overlay">
 	<div class="container-fluid d-flex justify-content-end">
 		<div class="row"> 
-			<div class="col-md-12 text-light bg-dark p-4">
-				<h3 class="text-center">High Scores</h3>
-					<%= link_to "Edit results", scores_path, :class => 'btn btn-link btn-xs small text-danger' %>
-					<%= render 'scores/table' %>
+			<div class="col-md-12 text-light bg-dark p-4 rounded">
+				<h3>Current Score</h3>
+					<%#= link_to "Show scores", scores_path, :class => 'btn btn-link btn-xs small text-danger' %>
+					<%#= render 'scores/table' %>
+					<h5 class="text-center"><span id="ui-current-score">0</span> points</h5>
+					<h6 class="text-center text-muted"><span id="ui-current-hits"></span> heals</h6>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid fixed-bottom">
+		<div class="row">
+			<div class="text-light">
+				<form class="form-inline p-4 border-bottom-0 border border-dark">
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon  form-control-sm">🔥</div>
+						<input type="text" class="form-control form-control-sm" id="gun-input" placeholder="Type to fire" autofocus>
+					</div>
+				</form>
+			</div>
+			<div class="text-light pl-4">
+	<div id="health-bar" data-preset="bubble" data-fill-background="#372727" data-fill="#6582a6" style="width: 70px; height: 70px;" class="ldBar label-center"></div>
 			</div>
 		</div>
 	</div>
 </div>
-<%#= javascript_include_tag('game.js') %>
 <div id="game-canvas"></div>
 
