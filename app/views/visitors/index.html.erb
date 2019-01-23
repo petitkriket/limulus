@@ -1,30 +1,30 @@
-<div class="ui-overlay">
+<div class="ui-overlay d-flex align-items-end">
 	<div class="container-fluid d-flex justify-content-end">
 		<div class="row"> 
-			<div class="col-md-12 text-light bg-dark p-4 rounded">
+			<div class="col-md-12 text-light p-4 rounded border border-light" id="player-info">
 				<h3>Current Score</h3>
-					<%#= link_to "Show scores", scores_path, :class => 'btn btn-link btn-xs small text-danger' %>
-					<%#= render 'scores/table' %>
 					<h5 class="text-center"><span id="ui-current-score">0</span> points</h5>
-					<h6 class="text-center text-muted"><span id="ui-current-hits"></span> heals</h6>
+					<h6 class="text-center"><span id="ui-current-hits"></span> heals</h6>
 			</div>
 		</div>
 	</div>
 	<div class="container-fluid fixed-bottom">
 		<div class="row">
 			<div class="text-light">
-				<form class="form-inline p-4 border-bottom-0 border border-dark">
+				<form class="form-inline p-4 m-4 rounded border border-light" id="player-input">
 					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 						<div class="input-group-addon  form-control-sm">🔥</div>
-						<input type="text" class="form-control form-control-sm" id="gun-input" placeholder="Type to fire" autofocus>
+						<input type="text" class="form-control form-control-sm" id="user-input" placeholder="Type text to heal!" autofocus>
 					</div>
 				</form>
 			</div>
-			<div class="text-light pl-4">
+			<div class="text-light py-4">
 	<div id="health-bar" data-preset="bubble" data-fill-background="#372727" data-fill="#6582a6" style="width: 70px; height: 70px;" class="ldBar label-center"></div>
 			</div>
 		</div>
 	</div>
 </div>
 <div id="game-canvas"></div>
+<%= render 'visitors/title' %>
+<%= render 'visitors/ending' %>
 

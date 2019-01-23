@@ -7,6 +7,20 @@
 //= require_tree .
 
 window.onload = function () {
+
+	//testing button tool
+	$('#wave').on('click', function () {
+		// do stuff
+	});
+
+	// open title screen
+	$('#title-screen').modal('toggle');
+
+	// focus on input when game start
+	$('#title-screen').on('hidden.bs.modal', function () {
+		$('#user-input').focus();
+	});
+
 	// pull list from dictionary
 	var bacteriaList = dictionary.split(" ");
 
@@ -16,8 +30,8 @@ window.onload = function () {
 		resolution = 15; // MAYBE maybe add grids according to design
 
 	// load player defense
-	rayGun = new Image();
-	rayGun.src = 'img/ray-gun.png';
+	limulusIcon = new Image();
+	limulusIcon.src = 'img/user-icon.png';
 
 	// set items scale
 	var scale = {
@@ -66,7 +80,7 @@ window.onload = function () {
 		return oneString;
 	}
 	// create array of bacterias (x, y, string)
-	// TODO clip spawning roughly at top	
+	// TODO clip spawning roughly at top
 	var bacterias = d3.range(20)
 		.map(function (id) {
 			return {
@@ -94,6 +108,31 @@ window.onload = function () {
 	function updateHealth() {
 		healthBar.set(player.health);
 	}
+
+	// reset the game
+	function resetGame() {
+		// resetHealth();
+		// resetScore();
+		// bacteriaList = [];
+		// bacteriaList = dictionary.split(" ");
+		// add variable bacterias into function to call it here
+	}
+
+	var isOpen = false;
+	//monitor patient health
+	function monitorHealth() {
+		var foo = true;
+		if (player.health < 0 && foo === true && isOpen === false) {
+			// open title screen
+			$('#ending-screen').modal('show');
+			isOpen = true;
+			// add the form
+		} else if (player.health < 0 && foo === false && isOpen === false) {
+			$('#ending-screen').modal('show');
+			isOpen = true;
+		}
+	}
+
 
 	// make particles position variate
 	function tick(item) {
@@ -124,29 +163,32 @@ window.onload = function () {
 		});
 	}
 
-	// items mouvement framerate set at 12fps
+	// game timeline taht do things at 14fps
 	setInterval(function () {
+
+		// randomize movement to get it organic
 		particles = tick(particles);
 		bacterias = viralAttack(bacterias);
+
+		// draw the actual thing
 		draw(particles, bacterias);
+
+		// monitor patient health
+		monitorHealth();
+
 	}, 70);
 
-	// set user gun
-	function drawUserGun() {
+	// set user limulus
+	function drawLimulusIcon() {
 		// draw the actual thing
-		context.drawImage(rayGun, player.x, player.y, 75, 75);
+		context.drawImage(limulusIcon, player.x, player.y, 75, 75);
 	}
 
-	// move gun to align with targets
-	function udpateUserGunPosition(positionX) {
+	// move limulus to align with targets
+	function udpateLimulusPosition(positionX) {
 		//	player.x = scale.x(positionX);
 		player.x = scale.x(positionX);
 
-	}
-
-	// gun easing
-	function easeInOut(t) {
-		return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 	}
 
 	// check if user input is matching with any bacteria
@@ -162,15 +204,15 @@ window.onload = function () {
 	// destroy bacteria if it's a match
 	function destroyBacteria(item) {
 
-		//align gun
-		udpateUserGunPosition(item.x);
+		//align limulus
+		udpateLimulusPosition(item.x);
 
-		// disable object prop and reset gunner input		
+		// disable object prop and reset user input		
 		item.isActive = false;
 
 		// remove typed bacteria, delay for comfort
 		setTimeout(function () {
-			$('#gun-input').val('');
+			$('#user-input').val('');
 		}, 150);
 
 		// add points and update ui
@@ -194,6 +236,10 @@ window.onload = function () {
 		// add one kill
 		player.hits += 1;
 
+		// regen some health
+		player.health += 2;
+		updateHealth();
+
 	}
 
 	// update user score and # hits
@@ -215,16 +261,41 @@ window.onload = function () {
 
 	// check if bacteria has reached bottom FIXME one side not working
 	function hasReachedSides(item) {
-		if ((item.x > width || item.x < 0) && item.isActive === true) {
+		if ((item.x < 0) && item.isActive === true) {
 			item.isActive = false;
-			console.log("has reached one side");
+			//console.log(item.name, "has escaped left (x < 1)");
+		}
+
+		if ((item.x > 1) && item.isActive === true) {
+			item.isActive = false;
+			//console.log(item.name, "has espaced right(x > 1)");
+		}
+	}
+
+	// determine if bacterias still around to heal
+	function isWaveActive(array) {
+		var found = false;
+		for (var i = 0; i < array.length; i++) {
+
+			// check if there is a remaining active bacteria
+			if (array[i].isActive === true) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	function callWave(boolean) {
+		if (boolean == true) {
+			//var stuff to call next opponents;
 		}
 	}
 
 	// monitor user input
-	var gunInput = $("#gun-input").on("change keyup paste", function () {
+	var userInput = $("#user-input").on("change keyup paste", function () {
 		setInterval(function () {
-			checkWordMatch(bacterias, gunInput.val());
+			checkWordMatch(bacterias, userInput.val());
 		}, 150);
 	});
 
@@ -237,8 +308,8 @@ window.onload = function () {
 		var i = 0;
 		ennemies.forEach(function (d) {
 
-			// draw only active FIXME i<20
-			if (i < 40 && d.isActive === true) {
+			// draw only active, FIXME 
+			if (i < 200 && d.isActive === true) {
 				i += 1;
 				var x = scale.x(d.x),
 					y = scale.y(d.y);
@@ -269,8 +340,8 @@ window.onload = function () {
 
 		});
 
-		// draw limulus canon gun
-		drawUserGun();
+		// draw limulus 
+		drawLimulusIcon();
 
 	}
 };
@@ -278,3 +349,8 @@ window.onload = function () {
 // COURSELINK https://stackoverflow.com/questions/2696692/setinterval-vs-settimeout
 // https://developingsean.wordpress.com/2012/05/
 // https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e
+// MAYBE enforce bouds (but as dormant and harmless viruses exists, conceptually make sense)
+// https://stackoverflow.com/questions/15344104/smooth-character-movement-in-canvas-game-using-keyboard-controls
+
+// MAYBE enforce bouds (but as dormant and harmless viruses exists, conceptually make sense)
+// https://stackoverflow.com/questions/15344104/smooth-character-movement-in-canvas-game-using-keyboard-controls

@@ -21,10 +21,9 @@ body {
 	background-color: rgba(24, 17, 17, 1) //	background-color: #111;
 }
 
-line {
-	stroke: rgb(220, 220, 220);
-	stroke-width: 1px;
-	shape-rendering: auto;
+#player-info,
+#player-input {
+	text-shadow: 0 0 3px #fff;
 }
 
 .ui-overlay {
@@ -62,4 +61,41 @@ line {
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight: 200;
+}
+
+// FIXME modale not responsive on mobile
+.modal {
+	margin: 2px;
+}
+
+#animated-limulus {
+	height: 25vh;
+	width: 25vh;
+	transform: rotate(90deg);
+
+}
+
+.modal-backdrop {
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal-dialog {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.modal-content {
+	height: 100%;
+	border-radius: 0;
+	max-width: 100%;
+}
+
+.modal-dialog {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	max-width: 100%;
 }
