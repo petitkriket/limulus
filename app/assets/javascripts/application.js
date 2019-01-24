@@ -41,6 +41,7 @@ window.onload = function () {
 			// start game msg
 			handleMsg("Type to heal bacterias !");
 		}, 500);
+		startLoop();
 	});
 
 	// pull list from dictionary
@@ -220,22 +221,26 @@ window.onload = function () {
 		});
 	}
 
-	// game timeline that do things at 14fps
-	setInterval(function () {
+	var loop;
 
-		// randomize movement to get it organic
-		particles = tick(particles);
-		bacterias = viralAttack(bacterias);
+	function startLoop() {
+		// game timeline that do things at 14fps
+		loop = setInterval(function () {
 
-		// draw the actual thing
-		draw(particles, bacterias);
+			// randomize movement to get it organic
+			particles = tick(particles);
+			bacterias = viralAttack(bacterias);
 
-		// monitor patient health
-		monitorHealth();
+			// draw the actual thing
+			draw(particles, bacterias);
 
-		// send new wave if clear
-		//isWaveActive(bacterias);
-	}, 70);
+			// monitor patient health
+			monitorHealth();
+
+			// send new wave if clear
+			console.log(isWaveActive(bacterias));
+		}, 70);
+	}
 
 	// set user limulus
 	function drawLimulusIcon() {
@@ -365,32 +370,22 @@ window.onload = function () {
 
 	// determine if bacterias still around to heal
 	function isWaveActive(array) {
-		var found = false;
 		for (var i = 0; i < array.length; i++) {
 
 			// check if there is a remaining active bacteria
-			if (array[i].isActive === true && gameInit === true && waveCalled === false) {
-				found = true;
-				//	$(window).trigger('wave-cleared');
-				break;
+			if (array[i].isActive === true && gameInit === true) {
+				return true;
 			}
 		}
-		return found;
+		$(window).trigger('wave-cleared');
+		return false;
 	}
-	var waveCalled = false;
 
 	// add a new wave
 	$(window).on('wave-cleared', function () {
-		var status = isWaveActive(bacterias);
-		if (status === false) {
-
-			seedBacterias(bacterias, 2);
-			waveCalled = true;
-			console.log("yay");
-			status = null;
-		} else {
-			console.log("still stuff here");
-		}
+		seedBacterias(bacterias, 2);
+		console.log("yay new wave");
+		status = null;
 	});
 
 	// monitor user input
