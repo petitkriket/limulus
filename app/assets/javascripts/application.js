@@ -10,15 +10,37 @@ window.onload = function () {
 
 	//testing button tool
 	$('#wave').on('click', function () {
-		// do stuff
+		handleMsg("Excellent! More are coming !");
+
+		setTimeout(function () {
+			// start game msg
+			seedBacterias(bacterias, 6);
+		}, 500);
+
+		if (isWaveActive(bacterias) === false) {
+			$(window).trigger('wave-cleared');
+			//	console.log(bacterias);
+		}
 	});
 
-	// open title screen
+	gameInit = false;
+
+	// open title screen so user launch the game
 	$('#title-screen').modal('toggle');
 
-	// focus on input when game start
+	// set array to receive initial wave
+	var bacterias = [];
+
+	// focus on input when game start TODO REFACTOR GAME START FUNC
 	$('#title-screen').on('hidden.bs.modal', function () {
+
 		$('#user-input').focus();
+		seedBacterias(bacterias, 3);
+		gameInit = true;
+		setTimeout(function () {
+			// start game msg
+			handleMsg("Type to heal bacterias !");
+		}, 500);
 	});
 
 	// pull list from dictionary
@@ -74,24 +96,33 @@ window.onload = function () {
 			};
 		});
 
-	// TODO seed from 
+	// select a random bacteria TODO add levels 
 	function randomBacteria(array) {
 		var oneString = array[Math.floor(Math.random() * array.length)];
 		return oneString;
 	}
-	// create array of bacterias (x, y, string)
-	// TODO clip spawning roughly at top
-	var bacterias = d3.range(20)
-		.map(function (id) {
-			return {
+
+	// create array of bacterias (x, y, string)  TODO clip spawning roughly at top
+	function seedBacterias(array, int) {
+		for (var i = 0; i < int; i++) {
+			var oneBacteria = {
 				x: Math.random(),
 				y: Math.random(),
 				r: Math.random(),
-				uid: id,
+				uid: i,
 				name: randomBacteria(bacteriaList),
 				isActive: true
 			};
-		});
+
+			array.push(oneBacteria);
+		}
+
+	}
+
+	// update UI 
+	function updateHealth() {
+		healthBar.set(player.health);
+	}
 
 	// set user score to 0
 	function resetScore() {
@@ -100,39 +131,65 @@ window.onload = function () {
 	}
 
 	// reset patient health to 100
-	function resetHealth() {
-		healthBar.set(player.health);
-	}
-
-	//set patient health to 100
-	function updateHealth() {
-		healthBar.set(player.health);
+	function resetUser() {
+		play.name = "no name";
+		player.hits = 0;
+		player.score = 0;
+		player.health = 100;
+		player.x = (width / 2);
+		player.y = (height / 1.1);
 	}
 
 	// reset the game
 	function resetGame() {
-		// resetHealth();
-		// resetScore();
-		// bacteriaList = [];
-		// bacteriaList = dictionary.split(" ");
-		// add variable bacterias into function to call it here
+
+		// reset modal state
+		$('#ending-screen').modal('hide');
+		isGameOver = false;
+
+		// reset user stats and UI
+		resetUser();
+		updateHealth();
+		resetScore();
+
+		// reset bacterias
+		bacterias = [];
+		seedBacterias(bacterias, 2);
+
 	}
 
-	var isOpen = false;
+	var isGameOver = false;
 	//monitor patient health
 	function monitorHealth() {
-		var foo = true;
-		if (player.health < 0 && foo === true && isOpen === false) {
+		var foo = true; // REMOVE
+		if (player.health < 0 && foo === true && isGameOver === false) {
+
+			// show notification
+			handleMsg("Limulus is gone...");
+
 			// open title screen
-			$('#ending-screen').modal('show');
-			isOpen = true;
-			// add the form
-		} else if (player.health < 0 && foo === false && isOpen === false) {
-			$('#ending-screen').modal('show');
-			isOpen = true;
+			setTimeout(function () {
+				// start game msg
+				$('#ending-screen').modal('show');
+				isGameOver = true;
+				gameInit = false;
+			}, 2000);
+
+
+
+			// add the form here
+		} else if (player.health < 0 && foo === false && isGameOver === undefined) { // careful
+
+			handleMsg("High score !");
+
+			setTimeout(function () {
+				// start game msg
+				$('#ending-screen').modal('show');
+				isGameOver = true;
+			}, 2000);
+
 		}
 	}
-
 
 	// make particles position variate
 	function tick(item) {
@@ -163,7 +220,7 @@ window.onload = function () {
 		});
 	}
 
-	// game timeline taht do things at 14fps
+	// game timeline that do things at 14fps
 	setInterval(function () {
 
 		// randomize movement to get it organic
@@ -176,6 +233,8 @@ window.onload = function () {
 		// monitor patient health
 		monitorHealth();
 
+		// send new wave if clear
+		//isWaveActive(bacterias);
 	}, 70);
 
 	// set user limulus
@@ -186,7 +245,15 @@ window.onload = function () {
 
 	// move limulus to align with targets
 	function udpateLimulusPosition(positionX) {
-		//	player.x = scale.x(positionX);
+
+
+		if (player.x < scale.x(positionX)) {
+			//	console.log("dans un sens");
+
+		}
+		if (player.x > scale.x(positionX)) {
+			//console.log("de l'autre");
+		}
 		player.x = scale.x(positionX);
 
 	}
@@ -242,10 +309,34 @@ window.onload = function () {
 
 	}
 
-	// update user score and # hits
+	// update user score and # hits and animate
 	function updateScore() {
 		$("#ui-current-score").html(player.score);
+
+		// animate it with a timer
+		$("#score-wrapper").addClass("animated heartBeat slow");
+
+		setTimeout(function () {
+			$("#score-wrapper").removeClass("animated heartBeat slow");
+		}, 500);
+
 		$("#ui-current-hits").html(player.hits);
+	}
+
+	// display instructions and state
+	function handleMsg(string) {
+		// change text
+		$("#notification").html("<h1>" + string + "</h1>");
+		//display and animate
+		$("#notification").removeClass("d-none");
+		$("#notification").addClass("animated fadeOut heartBeat infinite slow");
+
+		setTimeout(function () {
+			// stop animation and hide
+			$("#notification").removeClass("animated fadeOut heartBeat infinite slow");
+			$("#notification").addClass("d-none");
+
+		}, 2000);
 	}
 
 	// check if bacteria has reached bottom TODO refactor
@@ -254,12 +345,12 @@ window.onload = function () {
 
 			// disable bacteria and remove hp
 			item.isActive = false;
-			player.health -= 10;
+			player.health -= 30;
 			updateHealth();
 		}
 	}
 
-	// check if bacteria has reached bottom FIXME one side not working
+	// check if bacteria has reached sides to turn them off
 	function hasReachedSides(item) {
 		if ((item.x < 0) && item.isActive === true) {
 			item.isActive = false;
@@ -278,19 +369,29 @@ window.onload = function () {
 		for (var i = 0; i < array.length; i++) {
 
 			// check if there is a remaining active bacteria
-			if (array[i].isActive === true) {
+			if (array[i].isActive === true && gameInit === true && waveCalled === false) {
 				found = true;
+				//	$(window).trigger('wave-cleared');
 				break;
 			}
 		}
 		return found;
 	}
+	var waveCalled = false;
 
-	function callWave(boolean) {
-		if (boolean == true) {
-			//var stuff to call next opponents;
+	// add a new wave
+	$(window).on('wave-cleared', function () {
+		var status = isWaveActive(bacterias);
+		if (status === false) {
+
+			seedBacterias(bacterias, 2);
+			waveCalled = true;
+			console.log("yay");
+			status = null;
+		} else {
+			console.log("still stuff here");
 		}
-	}
+	});
 
 	// monitor user input
 	var userInput = $("#user-input").on("change keyup paste", function () {
