@@ -39,6 +39,8 @@ window.onload = function () {
 		setTimeout(function () {
 			// start game msg
 			handleMsg("Type to heal bacterias !");
+			backgroundSound(true);
+
 		}, 500);
 		startLoop();
 	});
@@ -158,12 +160,12 @@ window.onload = function () {
 			handleMsg("Type to heal bacterias !");
 		}, 500);
 		startLoop();
+		backgroundSound(true);
 
 		// add bacterias
 		setTimeout(function () {
 			seedBacterias(bacterias, 3);
 		}, 500);
-
 
 	}
 
@@ -174,6 +176,9 @@ window.onload = function () {
 
 			//stop the loop
 			clearInterval(loop);
+
+			// stop background sound
+			backgroundSound(false);
 
 			// check if user made a top score
 			isTopScore();
@@ -320,7 +325,7 @@ window.onload = function () {
 
 		// animate it with a timer
 		$("#score-wrapper").addClass("animated heartBeat slow");
-
+		healFx();
 		setTimeout(function () {
 			$("#score-wrapper").removeClass("animated heartBeat slow");
 		}, 500);
@@ -432,6 +437,26 @@ window.onload = function () {
 	$(".ui-overlay ").click(function () {
 		$('#user-input').focus();
 	});
+
+
+	function backgroundSound(boolean) {
+		var ocean = document.getElementById("background-sound");
+
+		if (boolean === true) {
+			ocean.play();
+		}
+		if (boolean === false) {
+			ocean.pause();
+
+		}
+	}
+
+
+	function healFx() {
+		var ocean = document.getElementById("destroy-sound");
+		ocean.play();
+	}
+
 
 	//restart game
 	$('#game-restart').on('click', function () {
