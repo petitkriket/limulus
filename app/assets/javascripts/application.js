@@ -7,14 +7,13 @@
 //= require_tree .
 
 window.onload = function () {
-
 	//testing button tool
 	$('#wave').on('click', function () {
 		handleMsg("Excellent! More are coming !");
 
 		setTimeout(function () {
 			// start game msg
-			seedBacterias(bacterias, 6);
+			seedBacterias(bacterias, 3);
 		}, 500);
 
 		if (isWaveActive(bacterias) === false) {
@@ -133,7 +132,7 @@ window.onload = function () {
 
 	// reset patient health to 100
 	function resetUser() {
-		play.name = "no name";
+		player.name = "no name";
 		player.hits = 0;
 		player.score = 0;
 		player.health = 100;
@@ -141,32 +140,43 @@ window.onload = function () {
 		player.y = (height / 1.1);
 	}
 
-	// reset the game
+	// restart game
 	function resetGame() {
-
-		// reset modal state
-		$('#ending-screen').modal('hide');
-		isGameOver = false;
-
 		// reset user stats and UI
 		resetUser();
 		updateHealth();
 		resetScore();
 
-		// reset bacterias
+		// reset bacterias and game state
 		bacterias = [];
-		seedBacterias(bacterias, 2);
+		gameInit = true;
+		isGameOver = false;
+
+		// notification
+		setTimeout(function () {
+			// start game msg
+			handleMsg("Type to heal bacterias !");
+		}, 500);
+		startLoop();
+
+		// add bacterias
+		setTimeout(function () {
+			seedBacterias(bacterias, 3);
+		}, 500);
+
 
 	}
 
 	var isGameOver = false;
 	//monitor patient health
 	function monitorHealth() {
-		var foo = true; // REMOVE
-		if (player.health < 0 && foo === true && isGameOver === false) {
+		if (player.health < 0 && isGameOver === false) {
 
-			// show notification
-			handleMsg("Limulus is gone...");
+			//stop the loop
+			clearInterval(loop);
+
+			// check if user made a top score
+			isTopScore();
 
 			// open title screen
 			setTimeout(function () {
@@ -179,16 +189,6 @@ window.onload = function () {
 
 
 			// add the form here
-		} else if (player.health < 0 && foo === false && isGameOver === undefined) { // careful
-
-			handleMsg("High score !");
-
-			setTimeout(function () {
-				// start game msg
-				$('#ending-screen').modal('show');
-				isGameOver = true;
-			}, 2000);
-
 		}
 	}
 
@@ -238,7 +238,7 @@ window.onload = function () {
 			monitorHealth();
 
 			// send new wave if clear
-			console.log(isWaveActive(bacterias));
+			isWaveActive(bacterias);
 		}, 70);
 	}
 
@@ -380,12 +380,36 @@ window.onload = function () {
 		$(window).trigger('wave-cleared');
 		return false;
 	}
+	// user has made an highscore
+	function isTopScore() {
+		var titleValue = "";
 
-	// add a new wave
+		// chech if user made better score than the fifth one in table
+		if (player.score > gon.min_high_score.mark) {
+			handleMsg("You made it through to high score!");
+
+			// user made it to the top
+			titleValue = "Your limulus has done well!!";
+
+			// show the form and place user mark
+			document.getElementById("score-mark").value = parseFloat(player.score);
+			$(".ending-title").html(titleValue);
+			$(".best-score").removeClass("d-none");
+
+
+		} else {
+			handleMsg("Limulus is gone...");
+			titleValue = "Limulus is gone..";
+			$(".ending-title").html(titleValue);
+		}
+	}
+
+
+	// add a new wave when body is cleared
 	$(window).on('wave-cleared', function () {
-		seedBacterias(bacterias, 2);
-		console.log("yay new wave");
-		status = null;
+		handleMsg("Excellent! More are coming !");
+		seedBacterias(bacterias, bacterias.length + 1);
+
 	});
 
 	// monitor user input
@@ -393,6 +417,25 @@ window.onload = function () {
 		setInterval(function () {
 			checkWordMatch(bacterias, userInput.val());
 		}, 150);
+	});
+
+	// disable form submission
+	$('#user-input').on('keyup keypress', function (e) {
+		var keyCode = e.keyCode || e.which;
+		if (keyCode === 13) {
+			e.preventDefault();
+			return false;
+		}
+	});
+
+	// focus on input on any click
+	$(".ui-overlay ").click(function () {
+		$('#user-input').focus();
+	});
+
+	//restart game
+	$('#game-restart').on('click', function () {
+		resetGame();
 	});
 
 	// draw game 
@@ -404,7 +447,7 @@ window.onload = function () {
 		var i = 0;
 		ennemies.forEach(function (d) {
 
-			// draw only active, FIXME 
+			// clip # ennemies on screen 
 			if (i < 200 && d.isActive === true) {
 				i += 1;
 				var x = scale.x(d.x),

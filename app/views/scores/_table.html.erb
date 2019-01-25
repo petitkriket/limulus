@@ -1,17 +1,17 @@
-<div class="ui-table-score-wrapper p-4 border border-light rounded">
+<div class="ui-table-score-wrapper p-4">
 <table id="hallmark" class="table table-sm small">
   <thead>
     <tr>
 		  <th>#</th>
       <th>Name</th>
-      <th>Mark</th>
+      <th>Score</th>
       <th>Date</th>
     </tr>
   </thead>
 
   <tbody>
 		<% @count = 0 %>
-    <% @scores.each do |score| %>
+    <% @scores.limit(5).each do |score| %>
       <tr>
       <th scope="row"><%= @count += 1 %></th>
 				<td><%= score.name %></td>
