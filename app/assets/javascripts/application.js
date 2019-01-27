@@ -109,7 +109,7 @@ window.onload = function () {
 		for (var i = 0; i < int; i++) {
 			var oneBacteria = {
 				x: Math.random(),
-				y: Math.random(),
+				y: Math.floor(Math.random() * 1) + 0.99,
 				r: Math.random(),
 				uid: i,
 				name: randomBacteria(bacteriaList),
