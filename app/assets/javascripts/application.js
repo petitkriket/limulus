@@ -80,7 +80,9 @@ window.onload = function () {
 		score: 0,
 		health: 100,
 		x: (width / 2),
-		y: (height / 1.1)
+		y: (height / 1.1),
+		destX: (width / 2),
+		destY: (height / 1.1)
 	};
 
 	// set patient health bar
@@ -250,6 +252,21 @@ window.onload = function () {
 	// set user limulus
 	function drawLimulusIcon() {
 		// draw the actual thing
+
+		//console.log(player.x, player.destX);
+		if (player.x !== player.destX) {
+			const difference = player.destX - player.x;
+			const speed = scale.x(0.025);
+
+			if (Math.abs(difference) > speed) {
+				const sign = Math.sign(difference);
+				player.x += speed * sign;
+			} else {
+				player.x = player.destX;
+			}
+		}
+
+		// for loop increasing or decreasing += 0.01 here
 		context.drawImage(limulusIcon, player.x, player.y, 75, 75);
 	}
 
@@ -257,14 +274,7 @@ window.onload = function () {
 	function udpateLimulusPosition(positionX) {
 
 
-		if (player.x < scale.x(positionX)) {
-			//	console.log("dans un sens");
-
-		}
-		if (player.x > scale.x(positionX)) {
-			//console.log("de l'autre");
-		}
-		player.x = scale.x(positionX);
+		player.destX = scale.x(positionX);
 
 	}
 

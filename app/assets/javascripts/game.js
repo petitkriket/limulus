@@ -1,4 +1,9 @@
-// user icon
+class Game {
+	constructor(state, level) {
+		this.level = 1 || level;
+		this.state = state || true;
+	}
+}
 class Player {
 	constructor(name, icon) {
 		this.name = "NO NAME" || name;
@@ -61,13 +66,12 @@ class Player {
 
 // words to shoot
 class Bacteria {
-	constructor(name) {
+	constructor(name, state) {
 		this.x = Math.random();
 		this.y = Math.random();
 		this.r = Math.random();
-		this.uid = i;
 		this.name = name;
-		this.isActive = true;
+		this.isActive = true || state;
 	}
 
 	// Adding a method to the constructor
